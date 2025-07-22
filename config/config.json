@@ -1,26 +1,23 @@
 {
   "development": {
     "username": "root",
-    "password": "mamank546",
-    "database": "budget_tracker_dev",
+    "password": null,
+    "database": "database_development",
     "host": "127.0.0.1",
-    "port": 8889,
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "mamank546",
-    "database": "budget_tracker_test",
+    "password": null,
+    "database": "database_test",
     "host": "127.0.0.1",
-    "port": 8889,
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "mamank546",
-    "database": "budget_tracker_prod",
+    "password": null,
+    "database": "database_production",
     "host": "127.0.0.1",
-    "port": 8889,
     "dialect": "mysql"
   }
 }
