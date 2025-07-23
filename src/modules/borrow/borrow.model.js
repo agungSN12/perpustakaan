@@ -1,33 +1,30 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    "User",
+  const Borrow = sequelize.define(
+    "Borrow",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      uuid: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        defaultValue: DataTypes.UUIDV4,
-        unique: true,
-      },
-      name: {
-        type: DataTypes.STRING(50),
+      user_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING(50),
+      book_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
       },
-      number: {
-        type: DataTypes.STRING(50),
+      tanggal_pengembalian: {
+        type: DataTypes.DATE,
         allowNull: true,
       },
-      password: {
-        type: DataTypes.STRING(255),
+      tahun_terbit: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.ENUM("sedang di pinjam", "tidak sedang di pinjam"),
         allowNull: false,
       },
       created_at: {
@@ -43,19 +40,23 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "User",
-      tableName: "users",
+      modelName: "Borrow",
+      tableName: "borrows",
       timestamp: false,
       underscored: true,
     }
   );
 
-  User.associate = (models) => {
-    User.hasMany(models.Borrow, {
+  Borrow.associate = (models) => {
+    Borrow.belongsTo(models.User, {
       foreignKey: "user_id",
-      as: "borrows",
+      as: "user",
+    });
+    Borrow.belongsTo(models.Book, {
+      foreignKey: "book_id",
+      as: "book",
     });
   };
 
-  return User;
+  return Borrow;
 };
