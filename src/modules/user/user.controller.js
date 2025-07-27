@@ -4,7 +4,7 @@ const UserService = require("./user.service");
 class UserController {
   async getAll(req, res, next) {
     try {
-      const users = await UserService.getAll();
+      const users = await UserService.getAll(req.query);
       if (users.length === 0) throw new NotFound("Data Users Belum ada boy!");
       res.json({
         success: true,

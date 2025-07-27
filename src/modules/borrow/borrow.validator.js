@@ -13,20 +13,12 @@ const createBorrowValidator = [
     .isInt()
     .withMessage("book id harus berupa Int")
     .withMessage("tanggal pegembalian maksimal 10 karakter"),
-  body("tanggal_peminjaman")
+  body("tanggal_pengembalian")
     .notEmpty()
-    .withMessage("tanggal peminjaman wajib di isi")
+    .withMessage("tanggal pengembalian wajib di isi")
     .isISO8601()
     .toDate()
     .withMessage("format tanggal tidak valid"),
-
-  body("status")
-    .notEmpty()
-    .withMessage("status wajib di isi")
-    .isIn(["sedang di pinjam", "tidak sedang di pinjam"])
-    .withMessage(
-      "status harus 'sedang di pinjam', atau 'tidak sedang di pinjam' "
-    ),
 ];
 
 const updateBorrowValidator = [
@@ -43,9 +35,9 @@ const updateBorrowValidator = [
     .isInt()
     .withMessage("book id harus berupa Int")
     .withMessage("tanggal pegembalian maksimal 10 karakter"),
-  body("tanggal_peminjaman")
+  body("tanggal_pengembalian")
     .notEmpty()
-    .withMessage("tanggal peminjaman wajib di isi")
+    .withMessage("tanggal pengembalian wajib di isi")
     .isISO8601()
     .toDate()
     .withMessage("format tanggal tidak valid"),
@@ -53,10 +45,8 @@ const updateBorrowValidator = [
   body("status")
     .notEmpty()
     .withMessage("status wajib di isi")
-    .isIn(["sedang di pinjam", "tidak sedang di pinjam"])
-    .withMessage(
-      "status harus 'sedang di pinjam', atau 'tidak sedang di pinjam' "
-    ),
+    .isIn(["dipinjam", "tersedia"])
+    .withMessage("status harus 'dipinjam', atau 'tersedia' "),
 ];
 
 const IdparamsValidator = [

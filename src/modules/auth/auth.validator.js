@@ -20,6 +20,10 @@ const registerValidator = [
     .optional()
     .isMobilePhone("id-ID")
     .withMessage("Nomor telepon tidak valid"),
+  body("role")
+    .notEmpty()
+    .withMessage("role wajib di isi")
+    .withMessage("Nomor telepon tidak valid"),
 ];
 
 const loginValidator = [

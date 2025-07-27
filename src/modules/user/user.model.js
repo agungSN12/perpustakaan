@@ -24,10 +24,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       number: {
         type: DataTypes.STRING(50),
-        allowNull: true,
+        allowNull: false,
       },
       password: {
         type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      role: {
+        type: DataTypes.ENUM("siswa", "pegawai", "admin"),
         allowNull: false,
       },
       created_at: {

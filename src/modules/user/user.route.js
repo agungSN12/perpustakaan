@@ -10,11 +10,20 @@ const {
   createUserValidator,
 } = require("./user.validator");
 const validateRequest = require("../../middlewares/validation.middleware");
+const authorizedRole = require("../../middlewares/AuthorizedRole.middleware");
+const authJwt = require("../../middlewares/Auth.middleware");
 
-router.get("/", asyncErrorHandler(UserController.getAll.bind(UserController)));
+router.use(authJwt);
+
+router.get(
+  "/",
+  authorizedRole("admin"),
+  asyncErrorHandler(UserController.getAll.bind(UserController))
+);
 
 router.get(
   "/:id",
+  authorizedRole("admin"),
   idParamValidator,
   validateRequest,
   asyncErrorHandler(UserController.getById.bind(UserController))
@@ -22,6 +31,7 @@ router.get(
 
 router.post(
   "/",
+  authorizedRole("admin"),
   createUserValidator,
   validateRequest,
   asyncErrorHandler(UserController.create.bind(UserController))
@@ -29,6 +39,7 @@ router.post(
 
 router.put(
   "/:id",
+  authorizedRole("admin"),
   idParamValidator,
   updateUserValidator,
   validateRequest,
@@ -37,6 +48,7 @@ router.put(
 
 router.delete(
   "/:id",
+  authorizedRole("admin"),
   idParamValidator,
   validateRequest,
   asyncErrorHandler(UserController.delete.bind(UserController))

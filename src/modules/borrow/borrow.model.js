@@ -10,21 +10,29 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       book_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "books",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       tanggal_pengembalian: {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      tahun_terbit: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       status: {
-        type: DataTypes.ENUM("sedang di pinjam", "tidak sedang di pinjam"),
+        type: DataTypes.ENUM("dipinjam", "tersedia"),
         allowNull: false,
       },
       created_at: {
@@ -51,10 +59,14 @@ module.exports = (sequelize, DataTypes) => {
     Borrow.belongsTo(models.User, {
       foreignKey: "user_id",
       as: "user",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
     Borrow.belongsTo(models.Book, {
       foreignKey: "book_id",
       as: "book",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
   };
 

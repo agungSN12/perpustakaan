@@ -8,8 +8,12 @@ class UserService {
     this.SALT_ROUNDS = 10;
   }
 
-  async getAll() {
-    return await User.findAll({ attributes: { exclude: ["password"] } });
+  async getAll(query) {
+    const { role } = query;
+    return await User.findAll({
+      attributes: { exclude: ["password"] },
+      where: role ? { role } : undefined,
+    });
   }
 
   async getById(id) {
