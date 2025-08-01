@@ -1,27 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const Book = sequelize.define(
-    "Book",
+  const Category = sequelize.define(
+    "Category",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      judul: {
-        type: DataTypes.STRING(100),
+      name: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
-      pengarang: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      jumlah_halaman: {
-        type: DataTypes.INTEGER,
+      description: {
+        type: DataTypes.STRING,
         allowNull: true,
-      },
-      tahun_terbit: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
       },
       created_at: {
         allowNull: false,
@@ -35,21 +27,14 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      sequelize,
-      modelName: "Book",
-      tableName: "books",
-      timestamp: false,
+      tableName: "categories",
+      timestamp: true,
       underscored: true,
     }
   );
 
-  Book.associate = (models) => {
-    Book.hasMany(models.Borrow, {
-      foreignKey: "book_id",
-      as: "borrow",
-    });
-
-    Book.belongsTo(models.Category, {
+  Category.associate = (model) => {
+    Category.hasMany(model.Book, {
       foreignKey: "category_id",
       as: "category",
       onDelete: "CASCADE",
@@ -57,5 +42,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  return Book;
+  return Category;
 };

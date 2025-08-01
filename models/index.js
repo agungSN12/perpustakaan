@@ -23,16 +23,19 @@ if (config.use_env_variable) {
 const UserModel = require("../src/modules/user/user.model");
 const BookModel = require("../src/modules/book/book.model");
 const BorrowModel = require("../src/modules/borrow/borrow.model");
+const CategoryModel = require("../src/modules/category/category.model");
 
 const User = UserModel(sequelize, Sequelize.DataTypes);
 const Book = BookModel(sequelize, Sequelize.DataTypes);
 const Borrow = BorrowModel(sequelize, Sequelize.DataTypes);
+const Category = CategoryModel(sequelize, Sequelize.DataTypes);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.User = User;
 db.Book = Book;
 db.Borrow = Borrow;
+db.Category = Category;
 
 Object.values(db).forEach((model) => {
   if (typeof model.associate === "function") {

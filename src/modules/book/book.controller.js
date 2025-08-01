@@ -4,31 +4,21 @@ const BookService = require("./book.service");
 class BookController {
   async getAll(req, res, next) {
     try {
-      const books = await BookService.getAll();
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const search = req.query.search || "";
+
+      const books = await BookService.getAll(page, limit, search);
       if (books.length === 0)
         throw new NotFoundError("Data Buku belum ada boy!");
-
-      const result = books.map((book) => {
-        const bookToJSON = book.toJSON();
-        return {
-          ...bookToJSON,
-          borrow:
-            !bookToJSON.borrow || bookToJSON.borrow.length === 0
-              ? [{ status: "tersedia" }]
-              : bookToJSON.borrow,
-        };
-      });
-
-      const tersediaCount = result.filter((book) => {
-        return book.borrow.some((b) => b.status === "tersedia");
-      }).length;
 
       res.json({
         success: true,
         message: "data buku berhasil di dapat",
-        book_available: tersediaCount,
-        book_borrowed: result.length - tersediaCount,
-        data: result,
+        book_available: books.book_available,
+        book_borrowed: books.book_borrowed,
+        pagination: books.pagination,
+        data: books.data,
       });
     } catch (error) {
       next(error);
